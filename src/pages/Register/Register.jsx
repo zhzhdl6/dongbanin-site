@@ -1,40 +1,48 @@
 import React, { useState } from 'react';
 import styles from './Register.module.css';
 
+const ROLE_GENERAL = 'general';
+const ROLE_BUSINESS = 'business';
+
+// 🌟 사업자 등록번호 자동 하이픈 포매터 (XXX-XX-XXXXX)
+const formatBizNumber = (raw) => {
+  const digits = raw.replace(/\D/g, '').slice(0, 10);
+  if (digits.length <= 3) return digits;
+  if (digits.length <= 5) return `${digits.slice(0, 3)}-${digits.slice(3)}`;
+  return `${digits.slice(0, 3)}-${digits.slice(3, 5)}-${digits.slice(5)}`;
+};
+
 function Register({ onBack, onComplete }) {
-  // 🌟 기존 필드에 nickname과 profileImg 속성 추가
-  const [formData, setFormData] = useState({ 
-    email: '', 
-    pw: '', 
-    pwConfirm: '', 
-    name: '', 
+  const [role, setRole] = useState(ROLE_GENERAL);
+  const [formData, setFormData] = useState({
+    email: '',
+    pw: '',
+    pwConfirm: '',
+    name: '',
     phone: '',
     nickname: '',
-    profileImg: '🐱' // 기본 프로필 이모티콘 베이스 지정
+    profileImg: '🐱',
+    companyName: '',
+    bizNumber: ''
   });
-  
+
   const [pwError, setPwError] = useState('');
   const [matchError, setMatchError] = useState('');
   const [emailError, setEmailError] = useState('');
-  
-  // 🌟 닉네임 검증 및 팝업 토글용 상태값 추가
   const [nicknameError, setNicknameError] = useState('');
   const [isNicknameChecked, setIsNicknameChecked] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-  
-  // 이메일 인증 상태
-  const [authCode, setAuthCode] = useState(''); 
-  const [showAuthInput, setShowAuthInput] = useState(false); 
-  const [isEmailVerified, setIsEmailVerified] = useState(false); 
+  const [authCode, setAuthCode] = useState('');
+  const [showAuthInput, setShowAuthInput] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [codeError, setCodeError] = useState('');
-  
-  const [isCertified, setIsCertified] = useState(false); // 휴대폰 인증
+  const [isCertified, setIsCertified] = useState(false);
+  const [bizError, setBizError] = useState('');
 
-  // 🌟 DB 닉네임 중복 체크 모사용 가짜 데이터 배열
   const mockExistingNicknames = ['관리자', '홍길동', '스피커', '헤어디자이너'];
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '' : '올바른 이메일 형식을 입력해주세요.';
-  
+
   const validatePassword = (pw) => {
     if (pw.length === 0) return '';
     const hasLetter = /[a-zA-Z]/.test(pw);
@@ -49,14 +57,20 @@ function Register({ onBack, onComplete }) {
     setEmailError(validateEmail(value));
   };
 
-  // 🌟 닉네임 중복 체크 처리 핸들러
+  const handleBizNumberChange = (e) => {
+    const formatted = formatBizNumber(e.target.value);
+    setFormData(prev => ({ ...prev, bizNumber: formatted }));
+    const digits = formatted.replace(/\D/g, '');
+    if (digits.length === 0) { setBizError(''); return; }
+    setBizError(digits.length === 10 ? '' : '사업자등록번호 10자리를 모두 입력해주세요.');
+  };
+
   const handleCheckNickname = () => {
     if (!formData.nickname.trim()) {
       setNicknameError('사용하실 닉네임을 입력한 후 검사해주세요.');
       setIsNicknameChecked(false);
       return;
     }
-    
     if (mockExistingNicknames.includes(formData.nickname.trim())) {
       setNicknameError('이미 존재하는 중복 닉네임입니다. 다른 이름을 사용해주세요.');
       setIsNicknameChecked(false);
@@ -67,48 +81,55 @@ function Register({ onBack, onComplete }) {
     }
   };
 
-  // 🌟 이미지 파일 업로드 핸들러
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setFormData(prev => ({ ...prev, profileImg: imageUrl }));
-      setIsProfileModalOpen(false); // 팝업 닫기
+      setIsProfileModalOpen(false);
     }
   };
 
-  // 🌟 기본 제공 이모티콘 픽업 선택기
   const handleSelectEmoji = (emoji) => {
     setFormData(prev => ({ ...prev, profileImg: emoji }));
     setIsProfileModalOpen(false);
   };
 
-  // 🌟 가입 최종 완료 서브밋 제어기
   const handleFinalSubmit = () => {
-    let finalNickname = formData.nickname.trim();
-    
-    // 닉네임을 따로 안 적었다면 이름을 닉네임으로 강제 자동 기입 세팅
-    if (!finalNickname) {
-      finalNickname = formData.name.trim() || '미지정회원';
+    if (role === ROLE_BUSINESS) {
+      if (!formData.companyName.trim()) { alert('회사명을 입력해주세요.'); return; }
+      if (formData.bizNumber.replace(/\D/g, '').length !== 10) { alert('사업자등록번호 10자리를 정확히 입력해주세요.'); return; }
     }
 
-    alert(`회원가입 완료!\n닉네임: ${finalNickname}\n프로필: ${formData.profileImg.startsWith('http') ? '사용자 업로드 이미지' : formData.profileImg}`);
-    
-    if (onComplete) {
-      onComplete();
-    }
+    let finalNickname = formData.nickname.trim();
+    if (!finalNickname) finalNickname = formData.name.trim() || '미지정회원';
+
+    const roleLabel = role === ROLE_BUSINESS ? '사업자 회원' : '일반 회원';
+    alert(`회원가입 완료!\n회원 유형: ${roleLabel}\n닉네임: ${finalNickname}\n프로필: ${formData.profileImg.startsWith('http') ? '사용자 업로드 이미지' : formData.profileImg}`);
+
+    if (onComplete) onComplete(role);
   };
 
   const handleVerify = () => {
-    if (authCode === '1234') { 
+    if (authCode === '1234') {
       setIsEmailVerified(true);
       setShowAuthInput(false);
       setCodeError('');
-      alert("이메일 인증이 완료되었습니다.");
+      alert('이메일 인증이 완료되었습니다.');
     } else {
       setCodeError('인증코드를 정확히 작성해주세요.');
     }
   };
+
+  const isSubmitDisabled =
+    !isCertified ||
+    !isEmailVerified ||
+    pwError !== '' ||
+    matchError !== '' ||
+    formData.pw === '' ||
+    formData.name === '' ||
+    (formData.nickname.trim() !== '' && !isNicknameChecked) ||
+    (role === ROLE_BUSINESS && (!formData.companyName.trim() || formData.bizNumber.replace(/\D/g, '').length !== 10));
 
   return (
     <div className={styles.loginContainer}>
@@ -118,9 +139,28 @@ function Register({ onBack, onComplete }) {
       </div>
 
       <div className={styles.content}>
+        {/* 🌟 회원 유형 선택 탭 */}
+        <div className={styles.roleGroup}>
+          <button
+            type="button"
+            className={`${styles.roleTab} ${role === ROLE_GENERAL ? styles.roleTabActive : ''}`}
+            onClick={() => setRole(ROLE_GENERAL)}
+          >
+            <span className={styles.roleIcon}>👤</span>
+            <span className={styles.roleText}>일반 회원</span>
+          </button>
+          <button
+            type="button"
+            className={`${styles.roleTab} ${role === ROLE_BUSINESS ? styles.roleTabActive : ''}`}
+            onClick={() => setRole(ROLE_BUSINESS)}
+          >
+            <span className={styles.roleIcon}>🏢</span>
+            <span className={styles.roleText}>사업자 회원</span>
+          </button>
+        </div>
+
         <div className={styles.formGroup}>
-          
-          {/* 🌟 ① 최상단 프로필 사진 등록 슬롯 */}
+          {/* 프로필 사진 등록 슬롯 */}
           <div className={styles.profileUploadSection}>
             <div className={styles.profilePreviewCircle}>
               {formData.profileImg.startsWith('http') ? (
@@ -134,16 +174,16 @@ function Register({ onBack, onComplete }) {
             </button>
           </div>
 
-          {/* 🌟 ② 최상단 닉네임(선택) 슬롯 영역 */}
+          {/* 닉네임 */}
           <div className={styles.rowFieldContainer}>
-            <input 
-              type="text" 
-              placeholder="닉네임 (미입력 시 이름으로 자동기입)" 
-              className={styles.inputField} 
+            <input
+              type="text"
+              placeholder="닉네임 (미입력 시 이름으로 자동기입)"
+              className={styles.inputField}
               value={formData.nickname}
               onChange={(e) => {
                 setFormData(p => ({ ...p, nickname: e.target.value }));
-                setIsNicknameChecked(false); // 글자 수정되면 중복 확인 해제
+                setIsNicknameChecked(false);
               }}
             />
             <button className={styles.rowCheckBtn} onClick={handleCheckNickname}>중복확인</button>
@@ -153,12 +193,37 @@ function Register({ onBack, onComplete }) {
 
           <hr className={styles.fieldDivider} />
 
-          {/* 기존 회원가입 폼 요소 보존 */}
           <input type="text" placeholder="이름" className={styles.inputField} value={formData.name} onChange={(e) => setFormData(p => ({ ...p, name: e.target.value }))} />
-          
+
+          {/* 🌟 사업자 회원 전용 입력 필드 */}
+          {role === ROLE_BUSINESS && (
+            <>
+              <div className={styles.businessFieldGroup}>
+                <label className={styles.fieldLabel}>🏢 사업자 회원 전용 정보</label>
+                <input
+                  type="text"
+                  placeholder="회사명"
+                  className={styles.inputField}
+                  value={formData.companyName}
+                  onChange={(e) => setFormData(p => ({ ...p, companyName: e.target.value }))}
+                />
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  placeholder="사업자등록번호 (예: 123-45-67890)"
+                  className={styles.inputField}
+                  value={formData.bizNumber}
+                  onChange={handleBizNumberChange}
+                />
+                {bizError && <p className={styles.errorText}>{bizError}</p>}
+              </div>
+              <hr className={styles.fieldDivider} />
+            </>
+          )}
+
           <input type="email" placeholder="이메일 주소" className={styles.inputField} onChange={handleEmailChange} />
           {emailError && <p className={styles.errorText}>{emailError}</p>}
-          
+
           {showAuthInput && (
             <>
               <input type="text" placeholder="인증코드 4자리" className={styles.inputField} onChange={(e) => setAuthCode(e.target.value)} />
@@ -167,77 +232,51 @@ function Register({ onBack, onComplete }) {
           )}
 
           {!isEmailVerified && (
-            <button 
-              className={styles.authBtn} 
+            <button
+              className={styles.authBtn}
               onClick={() => showAuthInput ? handleVerify() : setShowAuthInput(true)}
               disabled={emailError !== '' || formData.email === ''}
             >
-              {showAuthInput ? "확인" : "이메일 인증 받기"}
+              {showAuthInput ? '확인' : '이메일 인증 받기'}
             </button>
           )}
-          {isEmailVerified && <p style={{ color: '#38A169', fontWeight: 'bold', fontSize: '14px', marginBottom: '10px' }}>✅ 이메일 인증 완료</p>}
-          
+          {isEmailVerified && <p className={styles.verifiedText}>✅ 이메일 인증 완료</p>}
+
           <input type="password" placeholder="비밀번호" className={styles.inputField} value={formData.pw} onChange={(e) => { const v = e.target.value; setFormData(p => ({...p, pw: v})); setPwError(validatePassword(v)); }} />
           {pwError && <p className={styles.errorText}>{pwError}</p>}
-          
+
           <input type="password" placeholder="비밀번호 확인" className={styles.inputField} value={formData.pwConfirm} onChange={(e) => { const v = e.target.value; setFormData(p => ({...p, pwConfirm: v})); setMatchError(formData.pw !== v ? '비밀번호가 일치하지 않습니다.' : ''); }} />
           {matchError && <p className={styles.errorText}>{matchError}</p>}
-          
-          <button className={styles.authBtn} onClick={() => { setIsCertified(true); alert("본인인증 완료"); }}>
-            {isCertified ? "✅ 휴대폰 본인인증 완료" : "휴대폰 본인인증하기"}
+
+          <button className={styles.authBtn} onClick={() => { setIsCertified(true); alert('본인인증 완료'); }}>
+            {isCertified ? '✅ 휴대폰 본인인증 완료' : '휴대폰 본인인증하기'}
           </button>
 
-          {/* 🌟 닉네임을 적었을 땐 중복체크 확인(isNicknameChecked)까지 완료해야 버튼 활성화되도록 인터록 추가 */}
-          <button 
-            className={styles.emailLoginBtn} 
-            onClick={handleFinalSubmit} 
-            disabled={
-              !isCertified || 
-              !isEmailVerified || 
-              pwError !== '' || 
-              matchError !== '' || 
-              formData.pw === '' || 
-              formData.name === '' ||
-              (formData.nickname.trim() !== '' && !isNicknameChecked)
-            }
-          >
-            가입 완료하기
+          <button className={styles.emailLoginBtn} onClick={handleFinalSubmit} disabled={isSubmitDisabled}>
+            {role === ROLE_BUSINESS ? '사업자 회원 가입 완료하기' : '가입 완료하기'}
           </button>
         </div>
       </div>
 
-      {/* 🌟 ③ 이미지등록 또는 기본 이모티콘 팝업 모달 레이어 */}
       {isProfileModalOpen && (
         <div className={styles.modalOverlay} onClick={() => setIsProfileModalOpen(false)}>
           <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
             <h3 className={styles.modalTitle}>프로필 설정</h3>
             <p className={styles.modalSub}>원하는 방식으로 이미지를 지정하세요.</p>
-            
+
             <div className={styles.modalBody}>
-              {/* 기기 이미지 등록 섹션 */}
               <label htmlFor="fileUploadInput" className={styles.fileUploadLabelBtn}>
                 📸 내 앨범에서 이미지 선택
               </label>
-              <input 
-                type="file" 
-                id="fileUploadInput" 
-                accept="image/*" 
-                className={styles.hiddenFileInput} 
-                onChange={handleFileChange} 
-              />
-              
+              <input type="file" id="fileUploadInput" accept="image/*" className={styles.hiddenFileInput} onChange={handleFileChange} />
+
               <div className={styles.emojiSelectionDivider}>
                 <span>또는 기본 캐릭터 고르기</span>
               </div>
-              
-              {/* 기본 이모티콘 풀 매칭 */}
+
               <div className={styles.emojiGrid}>
                 {['🐱', '🐈', '😺', '😻'].map((emoji, idx) => (
-                  <button 
-                    key={idx} 
-                    className={styles.emojiPickBtn} 
-                    onClick={() => handleSelectEmoji(emoji)}
-                  >
+                  <button key={idx} className={styles.emojiPickBtn} onClick={() => handleSelectEmoji(emoji)}>
                     {emoji}
                   </button>
                 ))}

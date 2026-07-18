@@ -1,17 +1,23 @@
-import React, { useState } from 'react'; // 🌟 useState 추가
+import React, { useState } from 'react';
 import styles from './Login.module.css';
 
+const ROLE_GENERAL = 'general';
+const ROLE_BUSINESS = 'business';
+
 function Login({ onLoginSuccess, onBack, onGoFindAccount, onGoRegister }) {
-  // 🌟 입력값을 저장할 상태 생성
+  const [role, setRole] = useState(ROLE_GENERAL);
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
 
-  // 🌟 로그인 검증 핸들러 함수
   const handleLoginSubmit = () => {
-    // 대표님이 테스트하고 싶으신 임의의 계정 정보 조건을 넣습니다.
+    if (!email.trim() || !pw.trim()) {
+      alert('이메일과 비밀번호를 모두 입력해주세요.');
+      return;
+    }
     if (email === 'test@test.com' && pw === '1234') {
-      alert('로그인에 성공했습니다!');
-      onLoginSuccess(); // App.jsx의 로그인 성공 로직 실행
+      const userType = role === ROLE_BUSINESS ? '사업자 회원' : '일반 회원';
+      alert(`${userType}으로 로그인에 성공했습니다!`);
+      onLoginSuccess(role);
     } else {
       alert('이메일 또는 비밀번호가 올바르지 않습니다.');
     }
@@ -25,26 +31,44 @@ function Login({ onLoginSuccess, onBack, onGoFindAccount, onGoRegister }) {
       </div>
 
       <div className={styles.content}>
+        {/* 🌟 회원 유형 선택 탭 */}
+        <div className={styles.roleGroup}>
+          <button
+            type="button"
+            className={`${styles.roleTab} ${role === ROLE_GENERAL ? styles.roleTabActive : ''}`}
+            onClick={() => setRole(ROLE_GENERAL)}
+          >
+            <span className={styles.roleIcon}>👤</span>
+            <span className={styles.roleText}>일반 회원</span>
+          </button>
+          <button
+            type="button"
+            className={`${styles.roleTab} ${role === ROLE_BUSINESS ? styles.roleTabActive : ''}`}
+            onClick={() => setRole(ROLE_BUSINESS)}
+          >
+            <span className={styles.roleIcon}>🏢</span>
+            <span className={styles.roleText}>사업자 회원</span>
+          </button>
+        </div>
+
         <div className={styles.formGroup}>
-          {/* 🌟 이메일 입력창에 value와 onChange 연결 */}
-          <input 
-            type="email" 
-            placeholder="이메일 주소" 
-            className={styles.inputField} 
+          <input
+            type="email"
+            placeholder="이메일 주소"
+            className={styles.inputField}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          {/* 🌟 비밀번호 입력창에 value와 onChange 연결 */}
-          <input 
-            type="password" 
-            placeholder="비밀번호" 
-            className={styles.inputField} 
+          <input
+            type="password"
+            placeholder="비밀번호"
+            className={styles.inputField}
             value={pw}
             onChange={(e) => setPw(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') handleLoginSubmit(); }}
           />
-          {/* 🌟 클릭 시 임의 로그인 검증 함수 실행 */}
           <button className={styles.emailLoginBtn} onClick={handleLoginSubmit}>
-            이메일로 로그인
+            {role === ROLE_BUSINESS ? '사업자 회원으로 로그인' : '이메일로 로그인'}
           </button>
         </div>
 
@@ -53,14 +77,13 @@ function Login({ onLoginSuccess, onBack, onGoFindAccount, onGoRegister }) {
         </div>
 
         <div className={styles.socialGroup}>
-          {/* 소셜 로그인은 테스트 편의상 누르면 바로 로그인되도록 기존대로 유지합니다 */}
-          <button className={`${styles.socialBtn} ${styles.kakao}`} onClick={onLoginSuccess}>
+          <button className={`${styles.socialBtn} ${styles.kakao}`} onClick={() => onLoginSuccess(role)}>
             <span className={styles.icon}>💬</span> 카카오로 계속하기
           </button>
-          <button className={`${styles.socialBtn} ${styles.naver}`} onClick={onLoginSuccess}>
+          <button className={`${styles.socialBtn} ${styles.naver}`} onClick={() => onLoginSuccess(role)}>
             <span className={styles.icon}>N</span> 네이버로 계속하기
           </button>
-          <button className={`${styles.socialBtn} ${styles.google}`} onClick={onLoginSuccess}>
+          <button className={`${styles.socialBtn} ${styles.google}`} onClick={() => onLoginSuccess(role)}>
             <span className={styles.icon}>G</span> 구글로 계속하기
           </button>
         </div>

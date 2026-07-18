@@ -15,12 +15,13 @@ import PlaceDetail from './components/PlaceDetail';
 
 import Wishlist from './pages/Wishlist/Wishlist';
 import Login from './pages/Login/Login';
-import FindAccount from './pages/FindAccount/FindAccount'; // 🌟 1. 파일 불러오기
+import FindAccount from './pages/FindAccount/FindAccount';
 import Register from './pages/Register/Register';
 import MyPage from './pages/MyPage/MyPage';
-import AuthGuard from './pages/AuthGuard/AuthGuard'; // 🌟 AuthGuard 컴포넌트 추가
+import AuthGuard from './pages/AuthGuard/AuthGuard';
 import EditProfile from './pages/MyPage/EditProfile';
 import EditNickname from './pages/MyPage/EditNickname';
+import BusinessDashboard from './pages/BusinessDashboard/BusinessDashboard';
 
 import 'swiper/css';
 
@@ -29,6 +30,8 @@ function App() {
   const [selectedCategoryId, setSelectedCategoryId] = useState(1);
   const [selectedPlaceId, setSelectedPlaceId] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState('general'); // 🌟 'general' | 'business'
+  const [companyName, setCompanyName] = useState(''); // 🌟 사업자 회원 회사명
 
   // 화면 전환 함수들
   const handleSelectCategory = (id) => { setSelectedCategoryId(id); setViewMode('list'); window.scrollTo(0, 0); };
@@ -36,18 +39,51 @@ function App() {
   const handleGoHome = () => { setViewMode('main'); window.scrollTo(0, 0); };
   const handleGoWishlist = () => { setViewMode('wish'); window.scrollTo(0, 0); };
   const handleGoLogin = () => { setViewMode('login'); window.scrollTo(0, 0); };
-  const handleLoginSuccess = () => { setIsLoggedIn(true); setViewMode('main'); window.scrollTo(0, 0); };
   const handleGoRegister = () => { setViewMode('register'); window.scrollTo(0, 0); };
   const handleGoFindAccount = () => { setViewMode('findAccount'); window.scrollTo(0, 0); };
 
+  // 🌟 로그인 성공 시 역할에 따라 대시보드 분기
+  const handleLoginSuccess = (role = 'general') => {
+    setIsLoggedIn(true);
+    setUserRole(role);
+    if (role === 'business') {
+      setCompanyName('(주)동반인');
+      setViewMode('businessDashboard');
+    } else {
+      setViewMode('main');
+    }
+    window.scrollTo(0, 0);
+  };
+
+  // 🌟 로그아웃 처리
+  const handleLogout = () => {
+    if (!window.confirm('로그아웃 하시겠습니까?')) return;
+    setIsLoggedIn(false);
+    setUserRole('general');
+    setCompanyName('');
+    setViewMode('main');
+    window.scrollTo(0, 0);
+  };
+
+  // 🌟 마이페이지 진입 시 역할에 따라 분기
+  const handleGoMyPage = () => {
+    if (userRole === 'business') {
+      setViewMode('businessDashboard');
+    } else {
+      setViewMode('mypage');
+    }
+    window.scrollTo(0, 0);
+  };
+
+  const userTypeLabel = userRole === 'business' ? '사업자 회원' : '일반 회원';
+
+  // 헤더/하단네비 숨김 여부
+  const hideChrome = ['login', 'findAccount', 'register', 'editProfile', 'editNickname'].includes(viewMode);
+
   return (
     <div>
-      {/* 상단 헤더 (로그인, 찾기, 회원가입, 계정설정, 닉네임변경 화면에서는 숨김) */}
-      {!['login', 'findAccount', 'register', 'editProfile', 'editNickname'].includes(viewMode) && (
-        <Header onGoHome={handleGoHome} />
-      )}
+      {!hideChrome && <Header onGoHome={handleGoHome} />}
 
-      {/* 화면 라우팅 분기 처리 */}
       {viewMode === 'main' ? (
         <>
           <MenuGrid onSelectCategory={handleSelectCategory} />
@@ -62,38 +98,41 @@ function App() {
         <AuthGuard isLoggedIn={isLoggedIn} onGoLogin={handleGoLogin}>
           <Wishlist onSelectPlace={handleSelectPlace} />
         </AuthGuard>
-      ) : viewMode === 'mypage' ? ( 
+      ) : viewMode === 'mypage' ? (
         <AuthGuard isLoggedIn={isLoggedIn} onGoLogin={handleGoLogin}>
-          <MyPage 
+          <MyPage
+            userType={userTypeLabel}
             onGoWishlist={() => setViewMode('wish')}
-            onGoEditProfile={() => setViewMode('editProfile')}     // 🌟 계정설정 페이지 점프 함수 연동
-            onGoEditNickname={() => setViewMode('editNickname')}   // 🌟 닉네임변경 페이지 점프 함수 연동
+            onGoEditProfile={() => setViewMode('editProfile')}
+            onGoEditNickname={() => setViewMode('editNickname')}
+            onLogout={handleLogout}
           />
         </AuthGuard>
-      ) : viewMode === 'editProfile' ? ( 
-        /* 🌟 계정 설정 페이지 렌더링 */
+      ) : viewMode === 'businessDashboard' ? (
+        <AuthGuard isLoggedIn={isLoggedIn} onGoLogin={handleGoLogin}>
+          <BusinessDashboard onLogout={handleLogout} companyName={companyName} />
+        </AuthGuard>
+      ) : viewMode === 'editProfile' ? (
         <EditProfile onBack={() => setViewMode('mypage')} />
-      ) : viewMode === 'editNickname' ? ( 
-        /* 🌟 닉네임 변경 페이지 렌더링 */
+      ) : viewMode === 'editNickname' ? (
         <EditNickname onBack={() => setViewMode('mypage')} />
       ) : viewMode === 'login' ? (
         <Login onLoginSuccess={handleLoginSuccess} onBack={handleGoHome} onGoFindAccount={handleGoFindAccount} onGoRegister={handleGoRegister} />
       ) : viewMode === 'findAccount' ? (
         <FindAccount onBack={() => setViewMode('login')} onGoHome={handleGoHome} />
-      ) : viewMode === 'register' ? ( 
+      ) : viewMode === 'register' ? (
         <Register onBack={() => setViewMode('login')} onComplete={handleLoginSuccess} />
       ) : (
         <PlaceDetail placeId={selectedPlaceId} onBack={() => setViewMode('list')} />
       )}
 
-      {/* 하단 네비게이션 및 푸터 여백 제어 (인증 화면 및 설정 세부 화면에서는 제외) */}
-      {!['login', 'findAccount', 'register', 'editProfile', 'editNickname'].includes(viewMode) && (
+      {!hideChrome && (
         <>
           <Footer />
-          <BottomNav 
-            onGoHome={() => setViewMode('main')} 
-            onGoWishlist={() => setViewMode('wish')} 
-            onGoMyPage={() => setViewMode('mypage')} 
+          <BottomNav
+            onGoHome={() => setViewMode('main')}
+            onGoWishlist={() => setViewMode('wish')}
+            onGoMyPage={handleGoMyPage}
           />
           <div style={{ height: '60px' }} className="mobile-only-space" />
         </>

@@ -1,104 +1,69 @@
-/* src/components/Login.module.css */
+/* src/pages/Login/Login.module.css */
 .loginContainer { width: 100%; min-height: 100vh; background-color: #FFFFFF; display: flex; flex-direction: column; }
 .header { display: flex; align-items: center; padding: 16px 20px; border-bottom: 1px solid #F1F5F9; }
 .backBtn { background: none; border: none; font-size: 15px; color: #515151; cursor: pointer; padding: 0; margin-right: 16px; }
 .title { font-size: 18px; font-weight: 700; color: #222222; margin: 0; }
 .content { padding: 32px 20px; }
+
+/* 🌟 회원 유형 선택 탭 */
+.roleGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.roleTab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 18px 12px;
+  background: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+.roleTab:hover { background: #F1F5F9; }
+.roleTabActive {
+  background: #FFF7F0;
+  border-color: var(--main-orange);
+  box-shadow: 0 4px 14px rgba(255, 138, 61, 0.18);
+}
+.roleIcon { font-size: 26px; }
+.roleText { font-size: 14px; font-weight: 700; color: #4A5568; }
+.roleTabActive .roleText { color: var(--main-orange); }
+
 .formGroup { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
 .inputField { width: 100%; padding: 16px; border: 1px solid #E2E8F0; border-radius: 10px; font-size: 15px; background-color: #F8FAFC; box-sizing: border-box; }
-.inputField:focus { outline: none; border-color: #FF7527; background-color: #FFFFFF; }
-.emailLoginBtn { width: 100%; padding: 16px; background-color: #4A5568; color: #FFFFFF; font-size: 16px; font-weight: 700; border: none; border-radius: 10px; cursor: pointer; margin-top: 8px; }
+.inputField:focus { outline: none; border-color: var(--main-orange); background-color: #FFFFFF; }
+.emailLoginBtn { width: 100%; padding: 16px; background-color: var(--main-orange); color: #FFFFFF; font-size: 16px; font-weight: 700; border: none; border-radius: 10px; cursor: pointer; margin-top: 8px; transition: background-color 0.2s ease; }
+.emailLoginBtn:hover { background-color: #E67428; }
+
 .divider { display: flex; align-items: center; text-align: center; margin-bottom: 32px; }
 .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #E2E8F0; }
 .dividerText { padding: 0 16px; color: #A0AEC0; font-size: 13px; font-weight: 600; }
+
 .socialGroup { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
 .socialBtn { width: 100%; padding: 16px; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; position: relative; }
 .socialBtn .icon { position: absolute; left: 20px; font-size: 18px; }
 .kakao { background-color: #FEE500; color: #000000; }
 .naver { background-color: #03C75A; color: #FFFFFF; }
 .google { background-color: #FFFFFF; color: #222222; border: 1px solid #E2E8F0; }
+
 .footerLinks { display: flex; justify-content: center; align-items: center; gap: 12px; }
 .linkItem { font-size: 13px; color: #718096; cursor: pointer; font-weight: 500; }
 .linkDivider { color: #E2E8F0; font-size: 12px; }
 
-/* 🌟 탭 버튼 스타일 - 가로로 꽉 차게 수정 */
-.tabGroup { 
-  display: flex; 
-  border: 1px solid #E2E8F0; 
-  border-radius: 10px; 
-  margin-bottom: 24px; 
-  overflow: hidden; 
-  width: 100%; /* 🌟 100% 추가 */
-}
-
-.tabBtn { 
-  flex: 1; 
-  padding: 14px; 
-  border: none; 
-  background: #F8FAFC; 
-  color: #718096; 
-  font-weight: 700; 
-  cursor: pointer; 
-}
-
-.tabBtn.active { 
-  background: #FFFFFF; 
-  color: #FF7527; 
-  border: 2px solid #FF7527; 
-  border-radius: 10px; 
-}
-
-/* 🌟 인증 버튼과 찾기 버튼도 폭을 100%로 강제 지정 */
-.authBtn { 
-  width: 100%; /* 🌟 100% 추가 */
-  padding: 14px; 
-  background: #E2E8F0; 
-  border: none; 
-  border-radius: 10px; 
-  font-weight: 700; 
-  color: #4A5568; 
-  cursor: pointer; 
-  margin-bottom: 12px; 
-}
-
-.emailLoginBtn { 
-  width: 100%; /* 🌟 100% 추가 */
-  padding: 16px; 
-  background-color: #4A5568; 
-  color: #FFFFFF; 
-  font-size: 16px; 
-  font-weight: 700; 
-  border: none; 
-  border-radius: 10px; 
-  cursor: pointer; 
-  margin-top: 8px; 
-}
-/* 🌟 결과 팝업 스타일 추가 */
-.modalOverlay {
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex; align-items: center; justify-content: center; z-index: 1000;
-}
-.modalContent {
-  background: white; padding: 32px 24px; border-radius: 20px; 
-  width: 85%; max-width: 400px; text-align: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-.modalTitle { font-size: 18px; font-weight: 800; margin-bottom: 16px; color: #222; }
-.modalBody { font-size: 15px; color: #4A5568; margin-bottom: 24px; line-height: 1.6; }
-.modalBody strong { color: #FF7527; }
-
-/* 비밀번호 에러 문구 스타일 */
-.errorText { 
-  color: #E53E3E; 
-  font-size: 12px; 
-  margin: -8px 0 12px 8px; 
-  font-weight: 600; 
-}
-/* 읽기 전용 입력창은 약간 회색조로 표시 */
+/* 기존 호환 스타일 유지 */
+.tabGroup { display: flex; border: 1px solid #E2E8F0; border-radius: 10px; margin-bottom: 24px; overflow: hidden; width: 100%; }
+.tabBtn { flex: 1; padding: 14px; border: none; background: #F8FAFC; color: #718096; font-weight: 700; cursor: pointer; }
+.tabBtn.active { background: #FFFFFF; color: var(--main-orange); border: 2px solid var(--main-orange); border-radius: 10px; }
+.authBtn { width: 100%; padding: 14px; background: #E2E8F0; border: none; border-radius: 10px; font-weight: 700; color: #4A5568; cursor: pointer; margin-bottom: 12px; }
+.errorText { color: #E53E3E; font-size: 12px; margin: -8px 0 12px 8px; font-weight: 600; }
 .inputField[readOnly] { background-color: #EDF2F7; cursor: not-allowed; }
-
-
 .emptyBox { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 0; }
 .emptyEmoji { font-size: 40px; color: #CBD5E0; font-weight: 800; margin-bottom: 16px; }
 .emptyText { font-size: 15px; font-weight: 600; color: #718096; margin: 0; }
@@ -106,4 +71,4 @@
 .lockIcon { font-size: 25px; margin-bottom: 20px; }
 .noticeTitle { font-size: 20px; font-weight: 700; color: #222222; margin: 0 0 8px 0; }
 .noticeDesc { font-size: 14px; color: #718096; margin: 0 0 24px 0; line-height: 1.5; }
-.loginBtn { background-color: #FF7527; color: white; border: none; padding: 14px 28px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; width: 50%; }
+.loginBtn { background-color: var(--main-orange); color: white; border: none; padding: 14px 28px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; width: 50%; }

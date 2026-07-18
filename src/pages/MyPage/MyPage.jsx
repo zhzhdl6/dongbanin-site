@@ -1,18 +1,17 @@
-// src/pages/MyPage/MyPage.jsx 전체 코드
+// src/pages/MyPage/MyPage.jsx
 import React from 'react';
 import styles from './MyPage.module.css';
 
-function MyPage({ onGoWishlist, onGoEditProfile, onGoEditNickname, userType = '개인회원' }) {
+function MyPage({ onGoWishlist, onGoEditProfile, onGoEditNickname, onLogout, userType = '일반 회원' }) {
   return (
     <div className={styles.myPageContainer}>
-      
+
       {/* 프로필 섹션 */}
       <div className={styles.profileBox}>
         <div className={styles.profileImagePlaceholder}></div>
-        
+
         <div className={styles.profileTextGroup}>
           <span className={styles.userLabel}>{userType}</span>
-          {/* 🌟 관리자 > 라인 클릭 시 닉네임 변경 페이지로 이동 */}
           <div className={styles.nameLine} onClick={onGoEditNickname}>
             <h3 className={styles.userName}>관리자</h3>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" className={styles.arrowIcon}>
@@ -21,7 +20,6 @@ function MyPage({ onGoWishlist, onGoEditProfile, onGoEditNickname, userType = '�
           </div>
         </div>
 
-        {/* 🌟 [계정설정] 시안대로 완전히 우상단 끝으로 배치 */}
         <div className={styles.accountSettingWrap} onClick={onGoEditProfile}>
           <span className={styles.accountSettingBtn}>계정설정</span>
         </div>
@@ -61,7 +59,8 @@ function MyPage({ onGoWishlist, onGoEditProfile, onGoEditNickname, userType = '�
         </div>
       </div>
 
-      <button className={styles.logoutBtn}>로그아웃</button>
+      {/* 🌟 로그아웃 버튼 - onLogout 연동 */}
+      <button className={styles.logoutBtn} onClick={onLogout}>로그아웃</button>
     </div>
   );
 }
