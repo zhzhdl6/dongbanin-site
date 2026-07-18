@@ -1,0 +1,953 @@
+.detailContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: transparent;
+  min-height: 100vh;
+  box-sizing: border-box;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .detailContainer { max-width: 700px; }
+}
+
+.imageVisualBox {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mainEmoji {
+  font-size: 80px;
+  user-select: none;
+}
+
+.badgeGroup {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  gap: 4px;
+}
+
+.typeBadge {
+  background-color: rgba(34, 34, 34, 0.85);
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.petBadge {
+  background-color: #E3DAFF;
+  color: #5B44B9;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.imageCounter {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  z-index: 2;
+}
+
+/* 메인 정보 및 서브 블록들의 통합 패딩 섹션 */
+.mainInfoSection {
+  background-color: #FFFFFF;
+  padding: 24px 16px;
+  text-align: left;
+  border-bottom: 8px solid #F1F5F9;
+}
+
+.subTypeLabel {
+  font-size: 12px;
+  color: #888888;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.mainTitle {
+  font-size: 22px;
+  font-weight: 800;
+  color: #222222;
+  margin: 0 0 16px 0;
+}
+
+.addressRow, .ratingRow {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  cursor: pointer;
+  border-top: 1px solid #F1F5F9;
+}
+.ratingRow {
+    border-bottom: 1px solid #F1F5F9;
+  }
+.pinIcon, .starIcon {
+  font-size: 14px;
+  margin-right: 8px;
+}
+
+.starIcon { color: #FFB800; }
+
+.addressText, .ratingText {
+  font-size: 13px;
+  font-weight: 600;
+  color: #222222;
+  flex: 1;
+}
+
+.arrowIcon {
+  font-size: 12px;
+  color: #A0AEC0;
+  font-weight: bold;
+}
+
+/* 🌟 [신설] 평점 바 바로 아래 안착하는 해시태그 존 */
+.placeChipsZone {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 0 0 16px 0; /* 💡 위쪽 선을 제거하고 아래쪽 주소 바와의 간격만 유지 */
+}
+
+.miniTag {
+  font-size: 12px;
+  color: var(--main-orange); /* 🧡 리스트 페이지와 약속한 주황색 폰트 연동 */
+  font-weight: 600;
+}
+
+/* 🌟 [신설] 리스트 페이지의 핏을 이식한 은은한 필수 확인사항 상자 */
+.infoBlockWarning {
+  background-color: #F8F9FA;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 24px 0 36px;
+}
+
+.blockTitleWarning {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4A5568;
+  margin: 0 0 12px 0;
+}
+
+.reqList {
+  margin: 0;
+  padding-left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reqItem {
+  font-size: 12px;
+  color: var(--text-gray); /* 🩶 리스트 페이지와 약속한 서브 그레이 폰트 연동 */
+  font-weight: 500;
+}
+
+/* 🌟 [신설] 장소 소개글 영역 */
+.infoBlock {
+  margin-bottom: 12px;
+  padding: 0 4px;
+}
+
+.blockTitle {
+  font-size: 14px;
+  font-weight: 800;
+  color: #222222;
+  margin: 0 0 10px 0;
+}
+
+.infoText {
+  font-size: 13px;
+  color: #4A5568;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 리뷰 영역 */
+.reviewSectionBox {
+  background-color: #FFFFFF;
+  padding: 24px 16px;
+  text-align: left;
+}
+
+.reviewTopBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.totalRatingZone {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bigStar {
+  color: #FFB800;
+  font-size: 18px;
+}
+
+.bigRatingNum {
+  font-size: 16px;
+  font-weight: 800;
+  color: #222222;
+}
+
+.bigCountNum {
+  font-size: 14px;
+  color: #888888;
+  font-weight: 500;
+}
+
+.horizontalScrollRow {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 10px;
+}
+.horizontalScrollRow::-webkit-scrollbar { display: none; }
+
+.reviewScrollCard {
+  flex: 0 0 280px;
+  background-color: #F8F9FA;
+  border-radius: 14px;
+  padding: 14px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.revCardTop {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.revStars {
+  color: #FFB800;
+  font-size: 11px;
+}
+
+.revBadge {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  color: #555555;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.revDate {
+  font-size: 10px;
+  color: #A0AEC0;
+  margin-left: auto;
+}
+
+.revCardBody {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.revTextContent {
+  font-size: 12px;
+  color: #4A5568;
+  margin: 0;
+  line-height: 1.5;
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
+.revMinipic {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+
+/* 🌟 [신설] 문의하기 / 판매자 정보 행 섹션 */
+.actionMenuSection {
+  background-color: #FFFFFF;
+  padding: 0 16px;
+  border-top: 8px solid #F1F5F9;
+  border-bottom: 8px solid #F1F5F9;
+  text-align: left;
+}
+
+.actionRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  cursor: pointer;
+  text-decoration: none; /* a 태그 밑줄 제거 */
+  color: inherit;
+}
+
+.actionRow:not(:last-child) {
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.actionLabel {
+  font-size: 14px;
+  font-weight: 800;
+  color: #222222;
+}
+
+.actionRightText {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4A5568;
+}
+
+/* 🌟 [신설] 다른 사람이 자주 찾는 장소 추천 구역 */
+.recommendSection {
+  background-color: #FFFFFF;
+  padding: 28px 16px;
+  text-align: left;
+}
+
+.recommendMainTitle {
+  font-size: 16px;
+  font-weight: 800;
+  color: #222222;
+  margin: 0 0 20px 0;
+}
+
+/* 리스트 페이지의 아름다웠던 2열 투명 핏 그대로 적용 */
+.recGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px 12px;
+  width: 100%;
+}
+
+.recCard {
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.recImgBox {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.recEmoji {
+  font-size: 40px;
+}
+
+.recInfoBox {
+  padding: 10px 2px 4px 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.recName {
+  font-size: 13px;
+  font-weight: 700;
+  color: #222222;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recChips {
+  display: flex;
+  gap: 4px;
+}
+
+.recMiniTag {
+  font-size: 11px;
+  color: var(--main-orange);
+  font-weight: 600;
+}
+
+/* 🌟 [신설] 야놀자 핏 완벽 재현 바텀 시트 모달 시스템 */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: flex;
+  align-items: center;    /* 💡 하단 정렬에서 중앙 정렬로 변경 */
+  justify-content: center;
+  padding: 20px;
+}
+
+.bottomSheet {
+  width: 100%;
+  max-width: 700px;
+  background-color: #FFFFFF;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 20px 16px 40px 16px;
+  box-sizing: border-box;
+  animation: slideUp 0.3s ease-out; /* 부드럽게 슥 올라오는 연출 */
+  text-align: left;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.modalDragHandle {
+  width: 40px;
+  height: 4px;
+  background-color: #E2E8F0;
+  border-radius: 2px;
+  margin: 0 auto 16px auto;
+  cursor: pointer;
+}
+.centerModalBox {
+  width: 100%;
+  max-width: 340px; /* 모바일 화면에서 양옆 여백이 예쁘게 남는 최적의 폭 */
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  padding: 24px 20px;
+  box-sizing: border-box;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  animation: popUp 0.2s ease-out; /* 💡 가운데서 부드럽게 커지며 나타나는 효과 */
+  text-align: left;
+}
+
+@keyframes popUp {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.modalMainTitle {
+  font-size: 16px;
+  font-weight: 800;
+  color: #222222;
+  text-align: center;
+  margin: 0 0 16px 0;
+}
+
+/* 깔끔한 명세서 테이블 스타일 구조 마감 */
+.sellerTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+.sellerTable th {
+  background-color: #F8F9FA;
+  color: #4A5568;
+  font-weight: 700;
+  padding: 10px 8px;
+  width: 38%;
+  border-bottom: 1px solid #E2E8F0;
+  vertical-align: middle;
+}
+
+.sellerTable td {
+  color: #2D3748;
+  padding: 10px 8px;
+  border-bottom: 1px solid #E2E8F0;
+  font-weight: 500;
+  word-break: break-all; /* 주소나 이메일이 길어지면 자동 줄바꿈 처리 */
+}
+
+.modalCloseBtn {
+  width: 100%;
+  background-color: #F1F5F9;
+  color: #4A5568;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 0;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.modalCloseBtn:hover {
+  background-color: #E2E8F0;
+}
+
+/* 🌟 [신설] 위치/교통 대형 컴포넌트 레이아웃 */
+.mapTrafficSection {
+  background-color: #FFFFFF;
+  padding: 24px 16px;
+  text-align: left;
+  border-top: 8px solid #F1F5F9;
+}
+
+.sectionMainTitle {
+  font-size: 16px;
+  font-weight: 800;
+  color: #222222;
+  margin: 0 0 16px 0;
+}
+
+/* 가상 네이버/카카오 지도 그래픽 레이어 상자 */
+.mapPreviewBox {
+  width: 100%;
+  height: 180px;
+  background-color: #EBF8FF;
+  border-radius: 12px;
+  border: 1px solid #E2E8F0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.mapPin {
+  font-size: 28px;
+  animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-6px); }
+}
+
+.mapTextPreview {
+  font-size: 12px;
+  color: #3182CE;
+  font-weight: 700;
+}
+
+.trafficAddressText {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4A5568;
+  margin: 0 0 16px 0;
+}
+
+/* 🌟 [보더라인 완벽 구현] 복사 및 길안내 버튼 듀오 반반 배치 */
+.btnDoubleRow {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.trafficBtn, .trafficBtnActive {
+  flex: 1;
+  height: 40px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  transition: all 0.15s ease;
+}
+
+/* 주소복사: 흰색 순정 라운드 보더 */
+.trafficBtn {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  color: #4A5568;
+}
+
+/* 길안내: 강조선 보더 */
+.trafficBtnActive {
+  background-color: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  color: #222222;
+}
+
+.trafficBtn:active, .trafficBtnActive:active {
+  background-color: #F8F9FA;
+}
+
+/* 대중교통 인근 지하철 레이아웃 */
+.subwayGuideZone {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding-top: 20px;
+  margin-bottom: 20px;
+}
+
+.subwayIcon {
+  font-size: 16px;
+  margin-top: 2px;
+}
+
+.subwayList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.subwayName {
+  font-size: 13px;
+  color: #222222;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* 아랫단 길안내 텍스트 구역 */
+.roadGuideZone {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.roadGuideTitle {
+  font-size: 13px;
+  font-weight: 800;
+  color: #222222;
+  margin: 0;
+}
+
+.roadGuideText {
+  font-size: 13px;
+  color: #4A5568;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* 🌟 [신설] 내비게이션 팝업 전용 서브 타이틀 설명글 */
+.modalSubDesc {
+  font-size: 12px;
+  color: #718096;
+  text-align: center;
+  margin: -10px 0 16px 0;
+  font-weight: 500;
+}
+
+/* 팝업 내부 내비 선택 메뉴 바 세트 */
+.naviLinkList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.naviLinkBtn {
+  width: 100%;
+  height: 42px;
+  background-color: #F8F9FA;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #222222;
+  text-align: left;
+  padding-left: 16px;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background-color 0.15s ease;
+}
+
+.naviLinkBtn:hover {
+  background-color: #EDF2F7;
+}
+
+
+/* 🌟 [신설] 네이버 지도 프리뷰 전용 무드 그린 박스 */
+.mapPreviewBoxNaver {
+  width: 100%;
+  height: 180px;
+  background-color: #E6F9EE; /* 네이버 감성의 산뜻한 연그린 빽배경 */
+  border-radius: 12px;
+  border: 1px solid #C3E6D1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.naverPin {
+  font-size: 28px;
+  animation: bounce 1s infinite alternate;
+}
+
+.mapTextPreviewNaver {
+  font-size: 12px;
+  color: #03C75A; /* 네이버 공식 그린 시그니처 컬러 */
+  font-weight: 800;
+  letter-spacing: -0.2px;
+}
+
+/* 🌟 [신설] 중앙 정통 리뷰 상세 정보 팝업 카드 상자 */
+.centerModalBoxReview {
+  width: 100%;
+  max-width: 350px;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  padding: 22px 20px;
+  box-sizing: border-box;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  animation: popUp 0.2s ease-out;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.reviewPopupTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.popupUser {
+  font-size: 14px;
+  font-weight: 800;
+  color: #222222;
+}
+
+.popupDate {
+  font-size: 11px;
+  color: #A0AEC0;
+  font-weight: 600;
+}
+
+.reviewPopupMeta {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.popupStars {
+  color: #FFB800;
+  font-size: 12px;
+}
+
+.popupBadge {
+  color: var(--main-orange);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* 팝업 내부의 대형 정사각형 이미지 핏 */
+.popupBigPic {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  margin-bottom: 14px;
+}
+
+/* 텍스트가 아무리 길어도 스크롤바 넘치지 않게 가두는 고정 바디 존 */
+.popupScrollContent {
+  max-height: 150px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  padding-right: 4px;
+}
+.popupScrollContent::-webkit-scrollbar {
+  width: 4px;
+}
+.popupScrollContent::-webkit-scrollbar-thumb {
+  background-color: #E2E8F0;
+  border-radius: 2px;
+}
+
+.popupContentText {
+  font-size: 13px;
+  color: #4A5568;
+  line-height: 1.6;
+  margin: 0;
+  white-space: pre-wrap; /* 줄바꿈 기호 전부 인정 */
+  font-weight: 500;
+}
+
+.viewAllBtn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: 700;
+  color: #718096;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color 0.15s ease;
+}
+.viewAllBtn:hover {
+  color: var(--main-orange);
+}
+
+/* 🌟 [신설] 전체 리뷰를 가두어 스크롤 시키는 세로형 대형 팝업 보드 상자 */
+.centerModalBoxReviewList {
+  width: 100%;
+  max-width: 380px; /* 여러 리뷰 리스트가 쾌적하게 표현되도록 폭 대폭 상향 */
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  padding: 24px 18px;
+  box-sizing: border-box;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  animation: popUp 0.2s ease-out;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh; /* 💡 화면의 80% 높이를 넘어가면 내부 스크롤로 고정 */
+}
+
+/* 팝업 내부의 무한 세로 스크롤 리스트 엔진 영역 */
+.popupScrollListZone {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.popupScrollListZone::-webkit-scrollbar { width: 4px; }
+.popupScrollListZone::-webkit-scrollbar-thumb {
+  background-color: #CBD5E1;
+  border-radius: 2px;
+}
+
+/* 팝업 내부 개별 리뷰 행 디자인 가이드 */
+.popupReviewItemRow {
+  background-color: #F8F9FA;
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid #E2E8F0;
+}
+
+.popupReviewUserLine {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.popupUserNm {
+  font-weight: 600;
+  color: #222222;
+}
+
+.popupDateText {
+  color: #A0AEC0;
+  font-weight: 400;
+  font-size:11px;
+}
+
+.popupReviewMetaLine {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.popupStarText { color: #FFB800; font-size: 11px; }
+.popupBadgeText { color: var(--main-orange); font-size: 11px; font-weight: 500; }
+
+.popupReviewBodyLine {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.popupFullContentText {
+  font-size: 12px;
+  color: #4A5568;
+  line-height: 1.6;
+  margin: 0;
+  white-space: pre-wrap; /* 사용자가 개행한 모든 글 인정 */
+  flex: 1;
+}
+
+.popupMiniImage {
+  width: 54px;
+  height: 54px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+/* 🌟 [신설] 리뷰 정렬 3단 필터 레이아웃 규격 */
+.reviewSortTabRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 0 4px 14px 4px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.sortTabBtn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: 500;
+  color: #A0AEC0; /* 비활성화 상태는 차분한 그레이 */
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color 0.15s ease;
+}
+
+/* 🧡 클릭되어 활성화된 필터는 선명한 주황색 처리 */
+.sortTabBtn.activeSort {
+  color: var(--main-orange);
+  font-weight: 600;
+}
+
+.sortDivider {
+  font-size: 10px;
+  color: #E2E8F0;
+  user-select: none;
+}

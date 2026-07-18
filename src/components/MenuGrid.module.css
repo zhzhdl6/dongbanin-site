@@ -1,0 +1,61 @@
+.menuGridContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.menuGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px 10px;
+}
+
+.menuCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.menuCard:active {
+  transform: scale(0.95);
+}
+
+.menuIconBox {
+  width: 52px;
+  height: 52px;
+  background-color: #F8F9FA;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.menuLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: #333333;
+  letter-spacing: -0.3px;
+}
+
+@media (min-width: 768px) {
+  .menuGridContainer {
+    max-width: 700px;
+    padding: 0;
+  }
+  .menuIconBox {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+  }
+  .menuLabel {
+    font-size: 14px;
+  }
+}

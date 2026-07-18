@@ -1,0 +1,43 @@
+/* src/index.css */
+
+/* 🌟 사이트 전체 화면이 좌우로 흔들리거나 우측으로 탈출하는 현상 원천 차단 */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+:root {
+  /* 동반인 시그니처 컬러 스펙트럼 (모든 module.css에서 공통 사용 가능) */
+  --bg-cream: #FFFAF5;       /* 🤍 포근한 크림 베이지 (메인 배경) */
+  --main-orange: #FF8A3D;    /* 🧡 활기찬 댕댕이 오렌지 (로고/검색창 테두리) */
+  --main-blue: #3B82F6;      /* 💙 청량한 스카이 블루 */
+  --main-green: #2FBB86;     /* 💚 싱그러운 에메랄드 그린 */
+  
+  --text-dark: #222222;      /* 기본 글씨색 */
+  --text-gray: #888888;      /* 보조 설명 그레이 */
+  --border-light: #EFEFEF;   /* 연한 테두리 선 */
+}
+
+body {
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+  color: var(--text-dark);
+  background-color: var(--bg-cream);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* src/index.css 맨 밑에 추가 */
+@media (min-width: 768px) {
+  .mobile-only-space {
+    display: none !important;
+  }
+}

@@ -1,0 +1,97 @@
+.footerContainer {
+  width: 100%;
+  background-color: #F8F9FA; /* 눈이 피로하지 않은 은은한 라이트 그레이 */
+  border-top: 1px solid var(--border-light);
+  padding: 32px 0 40px 0; /* 아래쪽에 여유를 둔 안정적인 여백 */
+  box-sizing: border-box;
+}
+
+.footerInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+  text-align: left; /* 하단 정보 특성에 맞춘 깔끔한 좌측 정렬 */
+}
+
+@media (min-width: 768px) {
+  .footerInner {
+    max-width: 700px; /* 메인 콘텐츠들과 가로 정렬 핏 통일 */
+    padding: 0;
+  }
+}
+
+/* 이용약관 링크 탭 스타일 */
+.footerNav {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.navLink {
+  font-size: 13px;
+  color: #4A5568;
+  cursor: pointer;
+  letter-spacing: -0.3px;
+}
+
+.navLink.bold {
+  font-weight: 700;
+  color: #2D3748; /* 개인정보처리방침은 더 진하게 강조 */
+}
+
+/* 회사 정보 줄바꿈 및 글씨 세팅 */
+.infoGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+
+.infoRow {
+  font-size: 12px;
+  color: #718096;
+  line-height: 1.5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  letter-spacing: -0.2px;
+}
+
+/* 수직 분리선 공통 스타일 */
+.divider {
+  color: #E2E8F0;
+  user-select: none;
+  font-size: 11px;
+}
+
+/* 고객센터 안내 섹션 */
+.csSection {
+  border-top: 1px solid #E2E8F0;
+  padding-top: 16px;
+  margin-bottom: 16px;
+}
+
+.csTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #2D3748;
+  margin: 0 0 4px 0;
+}
+
+.csHours {
+  font-size: 11px;
+  color: #A0AEC0;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* 카피라이트 표기 */
+.copyright {
+  font-size: 11px;
+  color: #A0AEC0;
+  margin: 0;
+  letter-spacing: 0.2px;
+}

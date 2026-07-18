@@ -1,0 +1,92 @@
+/* src/components/SearchFilterBar.module.css */
+.filterBarContainer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 0px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .filterBarContainer {
+    max-width: 700px;
+    padding: 16px 0;
+  }
+}
+
+.filterBarInner {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 버튼 사이 쫀득한 여백 규칙 */
+  width: 100%;
+}
+
+/* 📍 지역선택 긴 버튼 */
+.locationBtn {
+  flex: 1;
+  height: 48px;
+  background-color: #FFFFFF;
+  border: 1px solid #CCCCCC;
+  border-radius: 12px; /* 대표님의 라운드 값 통일 규칙 */
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.pinIcon {
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+.btnText {
+  font-size: 14px;
+  font-weight: 700;
+  color: #222222;
+  flex: 1;
+  text-align: left;
+}
+
+.arrowIcon {
+  font-size: 13px;
+  color: #222222;
+  font-weight: bold;
+}
+
+/* 🧭 지도보기 버튼 (우측 스퀘어 핏) */
+.mapBtn {
+  width: 54px;
+  height: 48px;
+  background-color: #FFFFFF;
+  border: 1px solid #CCCCCC;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  box-shrink: 0;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.mapIcon {
+  width: 14px;
+  height: 14px;
+  color: #222222;
+  transform: rotate(-45deg); /* 이미지 속 엣지있는 각도 재현 */
+}
+
+.mapText {
+  font-size: 9px;
+  font-weight: 700;
+  color: #222222;
+  white-space: nowrap;
+}
+
+/* 터치 피드백 효과 */
+.locationBtn:active, .mapBtn:active {
+  background-color: #F8F9FA;
+}

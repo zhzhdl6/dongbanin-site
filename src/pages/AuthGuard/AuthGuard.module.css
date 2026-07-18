@@ -1,0 +1,8 @@
+.emptyBox { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 0; }
+.emptyEmoji { font-size: 40px; color: #CBD5E0; font-weight: 800; margin-bottom: 16px; }
+.emptyText { font-size: 15px; font-weight: 600; color: #718096; margin: 0; }
+.notLoggedContainer { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; padding: 0 20px; text-align: center; }
+.lockIcon { font-size: 25px; margin-bottom: 20px; }
+.noticeTitle { font-size: 20px; font-weight: 700; color: #222222; margin: 0 0 8px 0; }
+.noticeDesc { font-size: 14px; color: #718096; margin: 0 0 24px 0; line-height: 1.5; }
+.loginBtn { background-color: #FF7527; color: white; border: none; padding: 14px 28px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; width: 50%; } 

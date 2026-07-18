@@ -1,0 +1,136 @@
+.themeContainer {
+  width: 100%;
+  background-color: #1A1D21; 
+  margin: 40px auto; 
+  padding: 40px 0; 
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden; 
+}
+
+.themeTitleWrapper {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+  text-align: center; 
+  box-sizing: border-box;
+}
+
+.themeTitle {
+  font-size: 18px; 
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0 0 24px 0;
+  letter-spacing: -0.5px;
+}
+
+.themeContainer :global(.swiper) {
+  overflow: visible !important;
+}
+
+.swiperSlideCustom {
+  width: 68% !important; 
+  padding: 0 6px;
+  box-sizing: border-box;
+}
+
+.themeCard {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3; 
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15); 
+  cursor: pointer;
+}
+
+.themeBgImage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+  user-select: none;
+}
+
+.themeGradientOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 40%, rgba(0,0,0,0.8) 100%);
+  z-index: 1;
+}
+
+.themeInfoBox {
+  position: absolute;
+  left: 20px; 
+  right: 20px;
+  bottom: 24px; 
+  z-index: 2;
+  text-align: left; 
+  display: flex;
+  flex-direction: column;
+  gap: 6px; 
+}
+
+.themeName {
+  font-size: 18px; /* 원래 기획하신 선명하고 큼직한 20px 스케일 */
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0;
+  white-space: normal; 
+  line-height: 1.35;
+  letter-spacing: -0.5px;
+}
+
+.themeDesc {
+  font-size: 13px; 
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9); 
+  margin: 0;
+  white-space: normal;
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+}
+
+.themeBtnWrapper {
+  max-width: 700px; 
+  margin: 24px auto 0 auto; 
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.themeMoreLinkBtn {
+  width: 100%;
+  background-color: transparent; 
+  color: #FFFFFF; 
+  border: 1px solid #4E5561; 
+  padding: 14px 0; 
+  border-radius: 12px; 
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.themeMoreLinkBtn:active {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: #FFFFFF;
+}
+
+@media (min-width: 768px) {
+  .themeTitleWrapper {
+    max-width: 700px;
+    padding: 0;
+  }
+  .swiperSlideCustom {
+    width: 33.333% !important; 
+    padding: 0 8px;
+  }
+}

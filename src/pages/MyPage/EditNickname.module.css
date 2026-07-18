@@ -1,0 +1,15 @@
+/* src/pages/MyPage/EditNickname.module.css 전체 코드 */
+.container { width: 100%; min-height: 100vh; background: #fff; box-sizing: border-box; }
+.header { display: flex; align-items: center; padding: 16px 20px; border-bottom: 1px solid #F1F5F9; }
+.backBtn { background: none; border: none; font-size: 15px; cursor: pointer; margin-right: 16px; }
+.title { font-size: 18px; font-weight: 700; }
+.content { padding: 32px 20px; display: flex; flex-direction: column; gap: 20px; }
+.profileSection { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.circle { width: 90px; height: 90px; border-radius: 50%; background: #EDF2F7; display: flex; align-items: center; justify-content: center; font-size: 44px; overflow: hidden; border: 2px solid #E2E8F0; }
+.circle img { width: 100%; height: 100%; object-fit: cover; }
+.imgBtn { background: none; border: none; color: #FF7527; font-weight: 700; text-decoration: underline; cursor: pointer; }
+.row { display: flex; gap: 8px; }
+.input { flex: 1; padding: 16px; border: 1px solid #E2E8F0; border-radius: 10px; font-size: 15px; background: #F8FAFC; }
+.checkBtn { width: 90px; background: #4A5568; color: #fff; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
+.saveBtn { width: 100%; padding: 16px; background: #FF7527; color: #fff; font-size: 16px; font-weight: 700; border: none; border-radius: 10px; cursor: pointer; margin-top: 12px; }
+.saveBtn:disabled { background: #CBD5E0; cursor: not-allowed; }
