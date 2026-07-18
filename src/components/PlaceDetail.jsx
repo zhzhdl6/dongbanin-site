@@ -1,6 +1,15 @@
 // src/components/PlaceDetail.jsx
 import React, { useState } from 'react';
 import styles from './PlaceDetail.module.css';
+import { IconPin, IconStar, IconSubway, IconPhone, IconCopy, IconChevronRight, IconCup, IconDog, IconCat, IconCamera } from '../components/Icon';
+
+const Stars = ({ count = 5, size = 14 }) => (
+  <span style={{ display: 'inline-flex', gap: 2, color: '#F6AD55' }}>
+    {Array.from({ length: 5 }).map((_, i) => (
+      <IconStar key={i} width={size} height={size} style={{ opacity: i < count ? 1 : 0.25 }} />
+    ))}
+  </span>
+);
 
 function PlaceDetail({ placeId, onBack }) {
   const [isSellerOpen, setIsSellerOpen] = useState(false);
@@ -23,7 +32,7 @@ function PlaceDetail({ placeId, onBack }) {
     rating: '4.7',
     reviewCount: '3,867',
     imgBg: '#FFD1A9',
-    emoji: '☕',
+    Icon: IconCup,
     tags: ['실내 운동장', '야외 운동장', '주차'],
     reqs: ['캐리어/유모차 필수', '대형견 공간 분리', '노령동물 미끄럼 방지'],
     infoText: '안녕하세요! 동반인 대표 지기가 직접 꼼꼼히 검증하고 다녀온 숲속댕냥 정원 카페입니다. 300평 규모의 천연 잔디가 넓게 펼쳐져 있어 아이들이 목줄 없이 뛰어놀기 최적화되어 있습니다.',
@@ -38,13 +47,13 @@ function PlaceDetail({ placeId, onBack }) {
       mailOrderNumber: '2026-의정부-0123호'
     },
     reviews: [
-      { id: 1, user: '구름이엄마', stars: '★★★★★', ratingNum: 5, tag: '추천플레이스', date: '2026.01.25', content: '너~무 저렴하게 잘다녀왔어요 맛집도 주변에 많고 인프라도 훌륭해요! 아이가 잔디에서 눈치 안 보고 너무 잘 뛰어놀아서 다음 주에 또 오려고요. 사장님도 친절하시고 최고입니다!', imgBg: '#E2E8F0', imgEmoji: '🐶' },
-      { id: 2, user: '초코아빠', stars: '★★★★★', ratingNum: 5, tag: '친절해요', date: '2026.02.14', content: '수제 간식 퀄리티가 대박입니다. 공간 분리도 잘 되어 있어서 고양이 데리고 오기에도 전혀 부담 없었어요. 아이들을 위한 세심한 배려가 돋보입니다. 완전 강추합니다!', imgBg: '#CBD5E1', imgEmoji: '🐈' },
-      { id: 3, user: '별이누나', stars: '★★★☆☆', ratingNum: 3, tag: '넓은주차장', date: '2026.03.02', content: '주차하기 진짜 편하고 초보운전인데도 널널하게 댔어요. 음료 맛은 평범하지만 실내 인테리어가 인스타 감성 샷 찍기 딱 좋습니다.', imgBg: '#94A3B8', imgEmoji: '📸' }
+      { id: 1, user: '구름이엄마', stars: '★★★★★', ratingNum: 5, tag: '추천플레이스', date: '2026.01.25', content: '너~무 저렴하게 잘다녀왔어요 맛집도 주변에 많고 인프라도 훌륭해요! 아이가 잔디에서 눈치 안 보고 너무 잘 뛰어놀아서 다음 주에 또 오려고요. 사장님도 친절하시고 최고입니다!', imgBg: '#E2E8F0', ReviewIcon: IconDog },
+      { id: 2, user: '초코아빠', stars: '★★★★★', ratingNum: 5, tag: '친절해요', date: '2026.02.14', content: '수제 간식 퀄리티가 대박입니다. 공간 분리도 잘 되어 있어서 고양이 데리고 오기에도 전혀 부담 없었어요. 아이들을 위한 세심한 배려가 돋보입니다. 완전 강추합니다!', imgBg: '#CBD5E1', ReviewIcon: IconCat },
+      { id: 3, user: '별이누나', stars: '★★★☆☆', ratingNum: 3, tag: '넓은주차장', date: '2026.03.02', content: '주차하기 진짜 편하고 초보운전인데도 널널하게 댔어요. 음료 맛은 평범하지만 실내 인테리어가 인스타 감성 샷 찍기 딱 좋습니다.', imgBg: '#94A3B8', ReviewIcon: IconCamera }
     ],
     recommendations: [
-      { id: 301, name: '구름이네 루프탑 카페', type: '카페', imgBg: '#FFF5C3', emoji: '🍹', tags: ['노키즈존', '주차'] },
-      { id: 302, name: '힐링 아일랜드 티 하우스', type: '카페', imgBg: '#C9E9FF', emoji: '🍵', tags: ['반려동물존'] }
+      { id: 301, name: '구름이네 루프탑 카페', type: '카페', imgBg: '#FFF5C3', RecIcon: IconCup, tags: ['노키즈존', '주차'] },
+      { id: 302, name: '힐링 아일랜드 티 하우스', type: '카페', imgBg: '#C9E9FF', RecIcon: IconCup, tags: ['반려동물존'] }
     ]
   };
 
@@ -85,7 +94,7 @@ function PlaceDetail({ placeId, onBack }) {
           <span className={styles.typeBadge}>{placeData.type}</span>
           <span className={styles.petBadge}>{placeData.pets}</span>
         </div>
-        <span className={styles.mainEmoji}>{placeData.emoji}</span>
+        <span className={styles.mainEmoji}><placeData.Icon width={56} height={56} /></span>
         <div className={styles.imageCounter}>1 / 1</div>
       </div>
 
@@ -99,17 +108,17 @@ function PlaceDetail({ placeId, onBack }) {
         </div>
 
         <div className={styles.addressRow} onClick={() => setIsNaviOpen(true)}>
-          <span className={styles.pinIcon}>📍</span>
+          <span className={styles.pinIcon}><IconPin width={16} height={16} /></span>
           <span className={styles.addressText}>{placeData.address}</span>
-          <span className={styles.arrowIcon}>＞</span>
+          <span className={styles.arrowIcon}><IconChevronRight width={16} height={16} /></span>
         </div>
 
         <div className={styles.ratingRow} onClick={() => setIsAllReviewsOpen(true)}>
-          <span className={styles.starIcon}>★</span>
+          <span className={styles.starIcon}><IconStar width={16} height={16} /></span>
           <span className={styles.ratingText}>
             <strong>{placeData.rating}</strong> · {placeData.reviewCount}명 평가
           </span>
-          <span className={styles.arrowIcon}>＞</span>
+          <span className={styles.arrowIcon}><IconChevronRight width={16} height={16} /></span>
         </div>
 
         <div className={styles.infoBlockWarning}>
@@ -129,12 +138,12 @@ function PlaceDetail({ placeId, onBack }) {
       <div className={styles.reviewSectionBox}>
         <div className={styles.reviewTopBar}>
           <div className={styles.totalRatingZone}>
-            <span className={styles.bigStar}>★</span>
+            <span className={styles.bigStar}><IconStar width={20} height={20} /></span>
             <span className={styles.bigRatingNum}>{placeData.rating}</span>
             <span className={styles.bigCountNum}>({placeData.reviewCount})</span>
           </div>
           <button className={styles.viewAllBtn} onClick={() => setIsAllReviewsOpen(true)}>
-            전체보기 ＞
+            전체보기 <IconChevronRight width={14} height={14} />
           </button>
         </div>
 
@@ -142,14 +151,14 @@ function PlaceDetail({ placeId, onBack }) {
           {placeData.reviews && placeData.reviews.slice(0, 3).map((rev) => (
             <div key={rev.id} className={styles.reviewScrollCard} onClick={() => setSelectedReview(rev)}>
               <div className={styles.revCardTop}>
-                <span className={styles.revStars}>{rev.stars}</span>
+                <span className={styles.revStars}><Stars count={rev.ratingNum} size={14} /></span>
                 <span className={styles.revBadge}>{rev.tag}</span>
                 <span className={styles.revDate}>{rev.date}</span>
               </div>
               <div className={styles.revCardBody}>
                 <p className={styles.revTextContent}>{rev.content}</p>
                 <div className={styles.revMinipic} style={{ backgroundColor: rev.imgBg }}>
-                  <span>{rev.imgEmoji}</span>
+                  <span><rev.ReviewIcon width={24} height={24} /></span>
                 </div>
               </div>
             </div>
@@ -161,16 +170,16 @@ function PlaceDetail({ placeId, onBack }) {
       <div className={styles.mapTrafficSection}>
         <h3 className={styles.sectionMainTitle}>위치/교통</h3>
         <div className={styles.mapPreviewBoxNaver}>
-          <div className={styles.naverPin}>📍</div>
+          <div className={styles.naverPin}><IconPin width={20} height={20} /></div>
           <span className={styles.mapTextPreviewNaver}>Naver Maps API</span>
         </div>
-        <p className={styles.trafficAddressText}>📍 {placeData.address}</p>
+        <p className={styles.trafficAddressText}><IconPin width={14} height={14} style={{ verticalAlign: 'middle' }} /> {placeData.address}</p>
         <div className={styles.btnDoubleRow}>
-          <button className={styles.trafficBtn} onClick={handleCopyAddress}>주소복사</button>
+          <button className={styles.trafficBtn} onClick={handleCopyAddress}><IconCopy width={14} height={14} /> 주소복사</button>
           <button className={styles.trafficBtnActive} onClick={() => setIsNaviOpen(true)}>길안내</button>
         </div>
         <div className={styles.subwayGuideZone}>
-          <span className={styles.subwayIcon}>🚇</span>
+          <span className={styles.subwayIcon}><IconSubway width={20} height={20} /></span>
           <div className={styles.subwayList}>
             {placeData.subways && placeData.subways.map((sub, i) => <p key={i} className={styles.subwayName}>{sub}</p>)}
           </div>
@@ -180,12 +189,12 @@ function PlaceDetail({ placeId, onBack }) {
       {/* 문의하기 및 판매자 정보 구역 */}
       <div className={styles.actionMenuSection}>
         <a href={`tel:${placeData.tel}`} className={styles.actionRow}>
-          <span className={styles.actionLabel}>{placeData.type} 문의</span>
-          <span className={styles.actionRightText}>전화하기 ＞</span>
+          <span className={styles.actionLabel}><IconPhone width={16} height={16} /> {placeData.type} 문의</span>
+          <span className={styles.actionRightText}>전화하기 <IconChevronRight width={14} height={14} /></span>
         </a>
         <div className={styles.actionRow} onClick={() => setIsSellerOpen(true)}>
           <span className={styles.actionLabel}>판매자 정보</span>
-          <span className={styles.arrowIcon}>＞</span>
+          <span className={styles.arrowIcon}><IconChevronRight width={16} height={16} /></span>
         </div>
       </div>
 
@@ -196,7 +205,7 @@ function PlaceDetail({ placeId, onBack }) {
           {placeData.recommendations && placeData.recommendations.map((rec) => (
             <div key={rec.id} className={styles.recCard}>
               <div className={styles.recImgBox} style={{ backgroundColor: rec.imgBg }}>
-                <span className={styles.recEmoji}>{rec.emoji}</span>
+                <span className={styles.recEmoji}><rec.RecIcon width={32} height={32} /></span>
               </div>
               <div className={styles.recInfoBox}>
                 <h4 className={styles.recName}>{rec.name}</h4>
@@ -237,10 +246,10 @@ function PlaceDetail({ placeId, onBack }) {
             <h3 className={styles.modalMainTitle}>길안내 내비게이션 선택</h3>
             <p className={styles.modalSubDesc}>연결할 지도를 선택해 주세요.</p>
             <div className={styles.naviLinkList}>
-              <button className={styles.naviLinkBtn} onClick={() => handleNaviLink('kakaoT')}>💛 카카오 T 내비</button>
-              <button className={styles.naviLinkBtn} onClick={() => handleNaviLink('kakaoMap')}>💛 카카오맵</button>
-              <button className={styles.naviLinkBtn} onClick={() => handleNaviLink('naverMap')}>💚 네이버 지도</button>
-              <button className={styles.naviLinkBtn} onClick={() => handleNaviLink('tmap')}>💙 티맵 (TMap)</button>
+              <button className={styles.naviLinkBtn} onClick={() => handleNaviLink('kakaoT')}><span className={styles.naviDot} style={{ background: '#FEE500' }} /> 카카오 T 내비</button>
+              <button className={styles.naviLinkBtn} onClick={() => handleNaviLink('kakaoMap')}><span className={styles.naviDot} style={{ background: '#FEE500' }} /> 카카오맵</button>
+              <button className={styles.naviLinkBtn} onClick={() => handleNaviLink('naverMap')}><span className={styles.naviDot} style={{ background: '#03C75A' }} /> 네이버 지도</button>
+              <button className={styles.naviLinkBtn} onClick={() => handleNaviLink('tmap')}><span className={styles.naviDot} style={{ background: '#3B82F6' }} /> 티맵 (TMap)</button>
             </div>
             <button className={styles.modalCloseBtn} onClick={() => setIsNaviOpen(false)}>취소</button>
           </div>
@@ -270,13 +279,13 @@ function PlaceDetail({ placeId, onBack }) {
                     <span className={styles.popupDateText}>{rev.date}</span>
                   </div>
                   <div className={styles.popupReviewMetaLine}>
-                    <span className={styles.popupStarText}>{rev.stars}</span>
+                    <span className={styles.popupStarText}><Stars count={rev.ratingNum} size={14} /></span>
                     <span className={styles.popupBadgeText}>#{rev.tag}</span>
                   </div>
                   <div className={styles.popupReviewBodyLine}>
                     <p className={styles.popupFullContentText}>{rev.content}</p>
                     <div className={styles.popupMiniImage} style={{ backgroundColor: rev.imgBg }}>
-                      <span>{rev.imgEmoji}</span>
+                      <span><rev.ReviewIcon width={22} height={22} /></span>
                     </div>
                   </div>
                 </div>
@@ -297,12 +306,12 @@ function PlaceDetail({ placeId, onBack }) {
             </div>
             
             <div className={styles.reviewPopupMeta}>
-              <span className={styles.popupStars}>{selectedReview.stars}</span>
+              <span className={styles.popupStars}><Stars count={selectedReview.ratingNum} size={16} /></span>
               <span className={styles.popupBadge}>#{selectedReview.tag}</span>
             </div>
 
             <div className={styles.popupBigPic} style={{ backgroundColor: selectedReview.imgBg }}>
-              <span>{selectedReview.imgEmoji}</span>
+              <span><selectedReview.ReviewIcon width={40} height={40} /></span>
             </div>
 
             <div className={styles.popupScrollContent}>

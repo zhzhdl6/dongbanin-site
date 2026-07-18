@@ -951,3 +951,11 @@
   color: #E2E8F0;
   user-select: none;
 }
+.naviDot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
+}
