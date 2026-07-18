@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styles from './Login.module.css';
-import { IconChevronLeft, IconUser, IconBriefcase } from '../../components/Icon';
 
 const ROLE_GENERAL = 'general';
 const ROLE_BUSINESS = 'business';
@@ -27,19 +26,19 @@ function Login({ onLoginSuccess, onBack, onGoFindAccount, onGoRegister }) {
   return (
     <div className={styles.loginContainer}>
       <div className={styles.header}>
-        <button className={styles.backBtn} onClick={onBack}><IconChevronLeft width={18} height={18} /></button>
+        <button className={styles.backBtn} onClick={onBack}>◀</button>
         <h2 className={styles.title}>로그인</h2>
       </div>
 
       <div className={styles.content}>
-        {/* 회원 유형 선택 탭 */}
+        {/* 🌟 회원 유형 선택 탭 */}
         <div className={styles.roleGroup}>
           <button
             type="button"
             className={`${styles.roleTab} ${role === ROLE_GENERAL ? styles.roleTabActive : ''}`}
             onClick={() => setRole(ROLE_GENERAL)}
           >
-            <span className={styles.roleIcon}><IconUser width={26} height={26} /></span>
+            <span className={styles.roleIcon}>👤</span>
             <span className={styles.roleText}>일반 회원</span>
           </button>
           <button
@@ -47,7 +46,7 @@ function Login({ onLoginSuccess, onBack, onGoFindAccount, onGoRegister }) {
             className={`${styles.roleTab} ${role === ROLE_BUSINESS ? styles.roleTabActive : ''}`}
             onClick={() => setRole(ROLE_BUSINESS)}
           >
-            <span className={styles.roleIcon}><IconBriefcase width={26} height={26} /></span>
+            <span className={styles.roleIcon}>🏢</span>
             <span className={styles.roleText}>사업자 회원</span>
           </button>
         </div>
@@ -79,13 +78,13 @@ function Login({ onLoginSuccess, onBack, onGoFindAccount, onGoRegister }) {
 
         <div className={styles.socialGroup}>
           <button className={`${styles.socialBtn} ${styles.kakao}`} onClick={() => onLoginSuccess(role)}>
-            <span className={styles.socialIcon}>K</span> 카카오로 계속하기
+            <span className={styles.icon}>💬</span> 카카오로 계속하기
           </button>
           <button className={`${styles.socialBtn} ${styles.naver}`} onClick={() => onLoginSuccess(role)}>
-            <span className={styles.socialIcon}>N</span> 네이버로 계속하기
+            <span className={styles.icon}>N</span> 네이버로 계속하기
           </button>
           <button className={`${styles.socialBtn} ${styles.google}`} onClick={() => onLoginSuccess(role)}>
-            <span className={styles.socialIcon}>G</span> 구글로 계속하기
+            <span className={styles.icon}>G</span> 구글로 계속하기
           </button>
         </div>
 

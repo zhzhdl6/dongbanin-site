@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import styles from './Register.module.css';
-import {
-  IconChevronLeft, IconUser, IconBriefcase, IconCamera,
-  IconDogFace, IconCatFace, IconCheck
-} from '../../components/Icon';
 
 const ROLE_GENERAL = 'general';
 const ROLE_BUSINESS = 'business';
 
-// 사업자 등록번호 자동 하이픈 포매터 (XXX-XX-XXXXX)
+// 🌟 사업자 등록번호 자동 하이픈 포매터 (XXX-XX-XXXXX)
 const formatBizNumber = (raw) => {
   const digits = raw.replace(/\D/g, '').slice(0, 10);
   if (digits.length <= 3) return digits;
@@ -19,9 +15,15 @@ const formatBizNumber = (raw) => {
 function Register({ onBack, onComplete }) {
   const [role, setRole] = useState(ROLE_GENERAL);
   const [formData, setFormData] = useState({
-    email: '', pw: '', pwConfirm: '', name: '', phone: '',
-    nickname: '', profileImg: 'cat',
-    companyName: '', bizNumber: ''
+    email: '',
+    pw: '',
+    pwConfirm: '',
+    name: '',
+    phone: '',
+    nickname: '',
+    profileImg: '🐱',
+    companyName: '',
+    bizNumber: ''
   });
 
   const [pwError, setPwError] = useState('');
@@ -88,19 +90,9 @@ function Register({ onBack, onComplete }) {
     }
   };
 
-  const handleSelectEmoji = (key) => {
-    setFormData(prev => ({ ...prev, profileImg: key }));
+  const handleSelectEmoji = (emoji) => {
+    setFormData(prev => ({ ...prev, profileImg: emoji }));
     setIsProfileModalOpen(false);
-  };
-
-  const renderProfilePreview = () => {
-    const p = formData.profileImg;
-    if (typeof p === 'string' && p.startsWith('http')) {
-      return <img src={p} alt="프로필" className={styles.uploadedImg} />;
-    }
-    if (p === 'dog') return <IconDogFace width={44} height={44} />;
-    if (p === 'cat') return <IconCatFace width={44} height={44} />;
-    return <span>{p}</span>;
   };
 
   const handleFinalSubmit = () => {
@@ -113,7 +105,7 @@ function Register({ onBack, onComplete }) {
     if (!finalNickname) finalNickname = formData.name.trim() || '미지정회원';
 
     const roleLabel = role === ROLE_BUSINESS ? '사업자 회원' : '일반 회원';
-    alert(`회원가입 완료!\n회원 유형: ${roleLabel}\n닉네임: ${finalNickname}`);
+    alert(`회원가입 완료!\n회원 유형: ${roleLabel}\n닉네임: ${finalNickname}\n프로필: ${formData.profileImg.startsWith('http') ? '사용자 업로드 이미지' : formData.profileImg}`);
 
     if (onComplete) onComplete(role);
   };
@@ -142,19 +134,19 @@ function Register({ onBack, onComplete }) {
   return (
     <div className={styles.loginContainer}>
       <div className={styles.header}>
-        <button className={styles.backBtn} onClick={onBack}><IconChevronLeft width={18} height={18} /></button>
+        <button className={styles.backBtn} onClick={onBack}>◀</button>
         <h2 className={styles.title}>회원가입</h2>
       </div>
 
       <div className={styles.content}>
-        {/* 회원 유형 선택 탭 */}
+        {/* 🌟 회원 유형 선택 탭 */}
         <div className={styles.roleGroup}>
           <button
             type="button"
             className={`${styles.roleTab} ${role === ROLE_GENERAL ? styles.roleTabActive : ''}`}
             onClick={() => setRole(ROLE_GENERAL)}
           >
-            <span className={styles.roleIcon}><IconUser width={26} height={26} /></span>
+            <span className={styles.roleIcon}>👤</span>
             <span className={styles.roleText}>일반 회원</span>
           </button>
           <button
@@ -162,7 +154,7 @@ function Register({ onBack, onComplete }) {
             className={`${styles.roleTab} ${role === ROLE_BUSINESS ? styles.roleTabActive : ''}`}
             onClick={() => setRole(ROLE_BUSINESS)}
           >
-            <span className={styles.roleIcon}><IconBriefcase width={26} height={26} /></span>
+            <span className={styles.roleIcon}>🏢</span>
             <span className={styles.roleText}>사업자 회원</span>
           </button>
         </div>
@@ -171,10 +163,14 @@ function Register({ onBack, onComplete }) {
           {/* 프로필 사진 등록 슬롯 */}
           <div className={styles.profileUploadSection}>
             <div className={styles.profilePreviewCircle}>
-              {renderProfilePreview()}
+              {formData.profileImg.startsWith('http') ? (
+                <img src={formData.profileImg} alt="프로필" className={styles.uploadedImg} />
+              ) : (
+                <span className={styles.emojiDisplay}>{formData.profileImg}</span>
+              )}
             </div>
             <button className={styles.profileSelectTriggerBtn} onClick={() => setIsProfileModalOpen(true)}>
-              <IconCamera width={14} height={14} /> 프로필 사진 등록 (선택)
+              프로필 사진 등록 (선택)
             </button>
           </div>
 
@@ -193,17 +189,17 @@ function Register({ onBack, onComplete }) {
             <button className={styles.rowCheckBtn} onClick={handleCheckNickname}>중복확인</button>
           </div>
           {nicknameError && <p className={styles.errorText}>{nicknameError}</p>}
-          {isNicknameChecked && <p className={styles.successText}><IconCheck width={12} height={12} /> 닉네임 중복 확인 완료</p>}
+          {isNicknameChecked && <p className={styles.successText}>✓ 닉네임 중복 확인 완료</p>}
 
           <hr className={styles.fieldDivider} />
 
           <input type="text" placeholder="이름" className={styles.inputField} value={formData.name} onChange={(e) => setFormData(p => ({ ...p, name: e.target.value }))} />
 
-          {/* 사업자 회원 전용 입력 필드 */}
+          {/* 🌟 사업자 회원 전용 입력 필드 */}
           {role === ROLE_BUSINESS && (
             <>
               <div className={styles.businessFieldGroup}>
-                <label className={styles.fieldLabel}><IconBriefcase width={12} height={12} /> 사업자 회원 전용 정보</label>
+                <label className={styles.fieldLabel}>🏢 사업자 회원 전용 정보</label>
                 <input
                   type="text"
                   placeholder="회사명"
@@ -244,7 +240,7 @@ function Register({ onBack, onComplete }) {
               {showAuthInput ? '확인' : '이메일 인증 받기'}
             </button>
           )}
-          {isEmailVerified && <p className={styles.verifiedText}><IconCheck width={14} height={14} /> 이메일 인증 완료</p>}
+          {isEmailVerified && <p className={styles.verifiedText}>✅ 이메일 인증 완료</p>}
 
           <input type="password" placeholder="비밀번호" className={styles.inputField} value={formData.pw} onChange={(e) => { const v = e.target.value; setFormData(p => ({...p, pw: v})); setPwError(validatePassword(v)); }} />
           {pwError && <p className={styles.errorText}>{pwError}</p>}
@@ -253,7 +249,7 @@ function Register({ onBack, onComplete }) {
           {matchError && <p className={styles.errorText}>{matchError}</p>}
 
           <button className={styles.authBtn} onClick={() => { setIsCertified(true); alert('본인인증 완료'); }}>
-            {isCertified ? <><IconCheck width={14} height={14} /> 휴대폰 본인인증 완료</> : '휴대폰 본인인증하기'}
+            {isCertified ? '✅ 휴대폰 본인인증 완료' : '휴대폰 본인인증하기'}
           </button>
 
           <button className={styles.emailLoginBtn} onClick={handleFinalSubmit} disabled={isSubmitDisabled}>
@@ -270,7 +266,7 @@ function Register({ onBack, onComplete }) {
 
             <div className={styles.modalBody}>
               <label htmlFor="fileUploadInput" className={styles.fileUploadLabelBtn}>
-                <IconCamera width={16} height={16} /> 내 앨범에서 이미지 선택
+                📸 내 앨범에서 이미지 선택
               </label>
               <input type="file" id="fileUploadInput" accept="image/*" className={styles.hiddenFileInput} onChange={handleFileChange} />
 
@@ -279,8 +275,11 @@ function Register({ onBack, onComplete }) {
               </div>
 
               <div className={styles.emojiGrid}>
-                <button className={styles.emojiPickBtn} onClick={() => handleSelectEmoji('dog')}><IconDogFace width={30} height={30} /></button>
-                <button className={styles.emojiPickBtn} onClick={() => handleSelectEmoji('cat')}><IconCatFace width={30} height={30} /></button>
+                {['🐱', '🐈', '😺', '😻'].map((emoji, idx) => (
+                  <button key={idx} className={styles.emojiPickBtn} onClick={() => handleSelectEmoji(emoji)}>
+                    {emoji}
+                  </button>
+                ))}
               </div>
             </div>
 
