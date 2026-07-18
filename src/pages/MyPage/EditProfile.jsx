@@ -1,12 +1,13 @@
-// src/pages/MyPage/EditProfile.jsx 전체 코드
+// src/pages/MyPage/EditProfile.jsx
 import React from 'react';
 import styles from './EditProfile.module.css';
+import { IconChevronLeft } from '../../components/Icon';
 
 function EditProfile({ onBack }) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <button className={styles.backBtn} onClick={onBack}>◀</button>
+        <button className={styles.backBtn} onClick={onBack}><IconChevronLeft width={18} height={18} /></button>
         <h2 className={styles.title}>계정 설정</h2>
       </div>
 
@@ -43,7 +44,6 @@ function EditProfile({ onBack }) {
           회원정보 수정 완료
         </button>
 
-        {/* 🌟 최하단 회원탈퇴 소형 링크 */}
         <div className={styles.leaveWrap}>
           <span className={styles.leaveBtn} onClick={() => { if(window.confirm('정말 동반인을 탈퇴하시겠습니까?')) alert('탈퇴 처리되었습니다.'); }}>
             회원탈퇴
